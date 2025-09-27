@@ -58,10 +58,10 @@ class User extends Authenticatable
     {
         $roles = [];
         if (($value & 1) === 1) {
-            $roles[] = 'opiekun';
+            $roles[] = __('admin.title.roles.moderator');
         }
         if (($value & 2) === 2) {
-            $roles[] = 'admin';
+            $roles[] = __('admin.title.roles.admin');
         }
         return $roles;
     }
