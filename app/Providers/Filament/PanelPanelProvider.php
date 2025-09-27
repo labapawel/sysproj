@@ -54,6 +54,7 @@ class PanelPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
                 \App\Http\Middleware\SetLocale::class,
+                \App\Http\Middleware\MyAuth::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
