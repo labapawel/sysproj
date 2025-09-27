@@ -20,6 +20,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'role',
+        'active',
         'password',
     ];
 
@@ -32,6 +34,43 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function isAdmin()
+    {
+        return ($this->attributes['role'] & 2) === 2;
+    }
+
+    // czy jest opiekunem
+    public function isGuardian()
+    {
+        return ($this->attributes['role'] & 1) === 1;
+    }
+
+    public function setRoleAttribute($value)
+    {
+        if (is_array($value)) {
+                    $value = array_sum($value);
+        }
+        $this->attributes['role'] = $value;
+    }
+
+    public function getRoleAttribute($value)
+    {
+        $roles = [];
+        if (($value & 1) === 1) {
+            $roles[] = 'opiekun';
+        }
+        if (($value & 2) === 2) {
+            $roles[] = 'admin';
+        }
+        return $roles;
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        if(bcrypt("") !== $value )
+            $this->attributes['password'] = $value;
+    }
 
     /**
      * Get the attributes that should be cast.

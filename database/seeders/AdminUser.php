@@ -15,6 +15,7 @@ class AdminUser extends Seeder
         \App\Models\User::create([
             'name' => 'Admin',
             'email' => 'admin@admin.com',
+            'role' => 3, // ustawienie roli na admin
             'password' => bcrypt('password'),
         ]);
     }

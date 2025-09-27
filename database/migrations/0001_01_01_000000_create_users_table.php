@@ -12,13 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+                $table->id();
+                $table->string('name');
+                $table->string('email')->unique();
+                $table->timestamp('email_verified_at')->nullable();
+                $table->string('password');
+                // dodanie roli do tabeli users
+                $table->integer('role')->default(0); // 0 - user, 1 - opiekun, 2 - admin, 3 - opiekun i admin
+                $table->boolean('active')->default(true); // czy konto jest aktywne
+                $table->rememberToken();
+                $table->timestamps();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
