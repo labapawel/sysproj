@@ -54,7 +54,7 @@ class User extends Authenticatable
     public function setRoleAttribute($value)
     {
         if (is_array($value)) {
-                    $value = array_sum($value);
+            $value = array_sum($value);
         }
         $this->attributes['role'] = $value;
     }
@@ -68,13 +68,15 @@ class User extends Authenticatable
         if (($value & 2) === 2) {
             $roles[] = __('admin.title.roles.admin');
         }
+
         return $roles;
     }
 
     public function setPasswordAttribute($value)
     {
-        if(bcrypt("") !== $value )
+        if (bcrypt('') !== $value) {
             $this->attributes['password'] = $value;
+        }
     }
 
     /**

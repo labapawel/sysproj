@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class AdminUser extends Seeder
@@ -12,7 +12,7 @@ class AdminUser extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::create([
+        User::create([
             'name' => 'Admin',
             'email' => 'admin@admin.com',
             'role' => 3, // ustawienie roli na admin

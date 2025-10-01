@@ -22,7 +22,7 @@ class UserResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('admin.title.settings');
+    return __('admin.title.admin_settings');
     }
 
     public static function getPluralModelLabel(): string
@@ -32,7 +32,8 @@ class UserResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return auth()->user()->isAdmin();
+    $user = \Illuminate\Support\Facades\Auth::user();
+    return $user && ((int)$user->role & 2) === 2;
     }
 
     public static function getModelLabel(): string

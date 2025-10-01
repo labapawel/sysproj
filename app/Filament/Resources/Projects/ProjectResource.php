@@ -22,17 +22,17 @@ class ProjectResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('admin.title.projects');
+        return __('admin.title.teacher_panel');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('admin.title.projects');
+        return __('admin.title.my_projects');
     }
 
     public static function getModelLabel(): string
     {
-        return __('admin.title.projects');
+        return __('admin.title.my_projects');
     }
 
     public static function form(Schema $schema): Schema
