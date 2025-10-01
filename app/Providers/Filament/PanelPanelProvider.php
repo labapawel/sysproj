@@ -20,7 +20,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
- // Upewnij się, że masz ten import
+// Upewnij się, że masz ten import
 
 class PanelPanelProvider extends PanelProvider
 {
