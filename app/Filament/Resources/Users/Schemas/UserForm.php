@@ -2,11 +2,10 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Schemas\Schema;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Schema;
 
 class UserForm
 {
@@ -25,14 +24,12 @@ class UserForm
                     ->required(),
                 TextInput::make('password')
                     ->password()
-                    ->label(__('admin.title.password'))
-                    ,
+                    ->label(__('admin.title.password')),
                 TextInput::make('password_confirmation')
                     ->password()
                     ->label(__('admin.title.password_confirmation'))
                     ->dehydrated(false)
-                    ->same('password')
-                    ,    
+                    ->same('password'),
                 Select::make('role')
                     ->label(__('admin.title.role'))
                     ->multiple()
@@ -41,9 +38,9 @@ class UserForm
                         1 => __('admin.title.roles.moderator'),
                         2 => __('admin.title.roles.admin'),
                     ]),
-                    Checkbox::make('active')
-                        ->label(__('admin.title.active')),
-                ]);
+                Checkbox::make('active')
+                    ->label(__('admin.title.active')),
+            ]);
 
     }
 }

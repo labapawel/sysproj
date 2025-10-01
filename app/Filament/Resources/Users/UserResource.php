@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 
 class UserResource extends Resource
 {
@@ -22,7 +23,7 @@ class UserResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('admin.title.settings');
+        return __('admin.admin_settings');
     }
 
     public static function getPluralModelLabel(): string
@@ -32,7 +33,9 @@ class UserResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return auth()->user()->isAdmin();
+        $user = Auth::user();
+
+        return $user && ((int) $user->getRawOriginal('role') & 2) === 2;
     }
 
     public static function getModelLabel(): string

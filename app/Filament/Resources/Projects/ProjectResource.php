@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectResource extends Resource
 {
@@ -20,19 +21,26 @@ class ProjectResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    public static function canViewAny(): bool
+    {
+        $user = Auth::user();
+
+        return $user && ((int) $user->getRawOriginal('role') & 1) === 1;
+    }
+
     public static function getNavigationGroup(): ?string
     {
-        return __('admin.title.projects');
+        return __('admin.title.teacher_panel');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('admin.title.projects');
+        return __('admin.title.my_projects');
     }
 
     public static function getModelLabel(): string
     {
-        return __('admin.title.projects');
+        return __('admin.title.my_projects');
     }
 
     public static function form(Schema $schema): Schema
@@ -48,7 +56,7 @@ class ProjectResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            \App\Filament\Resources\Projects\RelationManagers\StagesRelationManager::class,
         ];
     }
 

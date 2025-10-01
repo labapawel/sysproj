@@ -10,6 +10,7 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Facades\FilamentView;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -18,8 +19,8 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Filament\Support\Facades\FilamentView;
-use Illuminate\Support\Facades\Blade; // Upewnij się, że masz ten import
+
+// Upewnij się, że masz ten import
 
 class PanelPanelProvider extends PanelProvider
 {
@@ -61,11 +62,11 @@ class PanelPanelProvider extends PanelProvider
             ]);
     }
 
-      public function boot(): void
+    public function boot(): void
     {
         FilamentView::registerRenderHook(
-                'panels::global-search.after',
-                 fn (): string => view('filament.components.language-switcher')->render(),
-            );
+            'panels::global-search.after',
+            fn (): string => view('filament.components.language-switcher')->render(),
+        );
     }
 }

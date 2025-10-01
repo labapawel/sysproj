@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class AdminUser extends Seeder
@@ -12,10 +12,33 @@ class AdminUser extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::create([
+        User::create([
+            'name' => 'Student',
+            'email' => 'student@example.com',
+            'role' => 0,
+            'active' => true,
+            'password' => bcrypt('password'),
+        ]);
+        User::create([
+            'name' => 'Teacher',
+            'email' => 'teacher@example.com',
+            'role' => 1,
+            'active' => true,
+            'password' => bcrypt('password'),
+        ]);
+        User::create([
             'name' => 'Admin',
+            'email' => 'admin@example.com',
+            'role' => 3,
+            'active' => true,
+            'password' => bcrypt('password'),
+        ]);
+
+        // add a second admin on a old email
+        User::create([
+            'name' => 'Admin 2',
             'email' => 'admin@admin.com',
-            'role' => 3, // ustawienie roli na admin
+            'role' => 3,
             'active' => true,
             'password' => bcrypt('password'),
         ]);

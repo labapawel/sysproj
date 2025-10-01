@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class LanguageController extends Controller
 {
@@ -13,6 +13,6 @@ class LanguageController extends Controller
             session(['locale' => $locale]);
         }
 
-        return \Redirect::back();
+        return Redirect::back();
     }
 }

@@ -17,13 +17,13 @@ class ProjectsTable
             ->columns([
                 TextColumn::make('name')
                     ->label(__('admin.title.name'))
-                    
+
                     ->searchable(),
                 TextColumn::make('user.name')
                     ->label(__('admin.title.user'))
-                    // ->numeric()
-                    // ->sortable()
-                    ,
+                // ->numeric()
+                // ->sortable()
+                ,
                 TextColumn::make('leadTime')
                     ->label(__('admin.title.leadTime'))
                     ->searchable(),
