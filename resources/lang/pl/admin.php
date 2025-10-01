@@ -21,6 +21,7 @@ return [
         'active' => 'Aktywny',
         'leadTime' => 'Czas prowadzenia',
         'description' => 'Opis',
+        'order' => 'Kolejność',
         'user' => 'Użytkownik',
         'teacher_panel' => 'Panel nauczyciela',
         'my_projects' => 'Moje projekty',

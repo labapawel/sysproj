@@ -21,6 +21,7 @@ return [
         'active' => 'Aktiv',
         'leadTime' => 'Lead Time',
         'description' => 'Beschreibung',
+        'order' => 'Reihenfolge',
         'user' => 'Benutzer',
         'teacher_panel' => 'Lehrer Panel',
         'my_projects' => 'Meine Projekte',

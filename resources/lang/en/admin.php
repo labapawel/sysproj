@@ -22,6 +22,7 @@ return [
         'active' => 'Active',
         'leadTime' => 'Lead Time',
         'description' => 'Description',
+        'order' => 'Order',
         'user' => 'User',
         'teacher_panel' => 'Teacher Panel',
         'my_projects' => 'My Projects',
