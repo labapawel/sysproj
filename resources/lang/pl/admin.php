@@ -9,6 +9,7 @@ return [
         'password'=>'Hasło',
         'password_confirmation'=>'Potwierdzenie hasła',
         'users'=>'Użytkownicy',
+        'projects'=>'Projekty',
         'roles' => [
             'moderator' => 'Opiekun',
             'admin' => 'Admin',
@@ -16,6 +17,9 @@ return [
         'role'=>'Rola',
         'settings'=>'Ustawienia',
         'active'=>'Aktywny',
-
+        'leadTime'=>'Czas prowadzenia',
+        'description'=>'Opis',
+        'user'=>'Użytkownik',
+        'projects'=>'Projekty',
     ]
     ];

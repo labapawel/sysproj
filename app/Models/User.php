@@ -35,6 +35,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+
     public function isAdmin()
     {
         return ($this->attributes['role'] & 2) === 2;

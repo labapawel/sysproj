@@ -8,6 +8,7 @@ return [
         'updated_at'=>'Updated at',
         'password'=>'Password',
         'password_confirmation'=>'Password confirmation',
+        'projects'=>'Projects',
         'users'=>'Users',
         'roles' => [
             'user' => 'User',
@@ -17,5 +18,9 @@ return [
         'role'=>'Role',
         'settings'=>'Settings',
         'active'=>'Active',
+        'leadTime'=>'Lead Time',
+        'description'=>'Description',
+        'user'=>'User',
+        'projects'=>'Projects',
     ]
 ];

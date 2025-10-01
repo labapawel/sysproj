@@ -8,6 +8,7 @@ return [
         'created_at'=>'Erstellt am',
         'updated_at'=>'Aktualisiert am',
         'password'=>'Passwort',
+        'projects'=>'Projekte',
         'password_confirmation'=>'Passwortbestätigung',
         'users'=>'Benutzer',
         'roles' => [
@@ -17,5 +18,9 @@ return [
         'role'=>'Rolle',
         'settings'=>'Einstellungen',
         'active'=>'Aktiv',
+        'leadTime'=>'Lead Time',
+        'description'=>'Beschreibung',
+        'user'=>'Benutzer',
+        'projects'=>'Projekte',
     ]
 ];
