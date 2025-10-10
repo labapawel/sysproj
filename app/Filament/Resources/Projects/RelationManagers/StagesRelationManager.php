@@ -17,6 +17,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Contracts\View\View;
 
 class StagesRelationManager extends RelationManager
 {
@@ -36,13 +37,6 @@ class StagesRelationManager extends RelationManager
                 Textarea::make('description')
                     ->label(__('admin.title.description'))
                     ->maxLength(65535),
-
-                TextInput::make('order')
-                    ->label(__('admin.title.order'))
-                    ->numeric()
-                    ->default(function () {
-                        return Stage::where('project_id', $this->getOwnerRecord()->id)->max('order') + 1 ?? 1;
-                    }),
 
                 TextInput::make('duration')
                     ->label(__('admin.title.leadTime'))
@@ -79,20 +73,24 @@ class StagesRelationManager extends RelationManager
 
                 TextColumn::make('tasks_count')
                     ->counts('tasks')
-                    ->label('Tasks'),
+                    ->label(__('admin.title.tasks')),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                CreateAction::make(),
+                CreateAction::make()
+                    ->mutateFormDataUsing(function (array $data): array {
+                        $maxOrder = Stage::where('project_id', $this->getOwnerRecord()->id)->max('order');
+                        $data['order'] = $maxOrder ? $maxOrder + 1 : 1;
+
+                        return $data;
+                    }),
             ])
             ->actions([
-                EditAction::make(),
-                DeleteAction::make(),
                 Action::make('move_up')
                     ->label('↑')
-                    ->tooltip('Move Up')
+                    ->tooltip(__('admin.title.move_up'))
                     ->color('gray')
                     ->action(function (Stage $record) {
                         $previousStage = Stage::where('project_id', $record->project_id)
@@ -113,10 +111,9 @@ class StagesRelationManager extends RelationManager
                         ->where('order', '<', $record->order)
                         ->exists()
                     ),
-
                 Action::make('move_down')
                     ->label('↓')
-                    ->tooltip('Move Down')
+                    ->tooltip(__('admin.title.move_down'))
                     ->color('gray')
                     ->action(function (Stage $record) {
                         $nextStage = Stage::where('project_id', $record->project_id)
@@ -137,6 +134,20 @@ class StagesRelationManager extends RelationManager
                         ->where('order', '>', $record->order)
                         ->exists()
                     ),
+                EditAction::make(),
+                DeleteAction::make(),
+                Action::make('manage_tasks')
+                    ->label(__('admin.title.manage_tasks'))
+                    ->icon('heroicon-o-arrow-top-right-on-square')
+                    ->color('primary')
+                    ->modalHeading(fn (Stage $record) => __('admin.title.tasks_for_stage', ['stage' => $record->name]))
+                    ->modalSubmitAction(false)
+                    ->modalCancelActionLabel(__('admin.title.close'))
+                    ->modalWidth('7xl')
+                    ->modalContent(fn (Stage $record): View => view(
+                        'filament.components.stage-tasks-modal',
+                        ['stage' => $record]
+                    )),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
