@@ -2,14 +2,14 @@
 
 namespace App\Filament\Resources\Groups\RelationManagers;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 use Filament\Actions\AttachAction;
 use Filament\Actions\DetachAction;
 use Filament\Actions\DetachBulkAction;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 class UsersRelationManager extends RelationManager
 {
