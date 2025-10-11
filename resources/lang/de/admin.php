@@ -28,6 +28,10 @@ return [
         'order' => 'Reihenfolge',
         'user' => 'Benutzer',
         'add_user' => 'Benutzer hinzufügen',
+        'all_projects' => 'Alle Projekte',
+        'project_owner' => 'Projektverantwortliche*r',
+        'stages' => 'Phasen',
+        'copy_suffix' => 'Kopie',
         'teacher_panel' => 'Lehrer Panel',
         'my_projects' => 'Meine Projekte',
         'manage_tasks' => 'Zum Abschnitt wechseln',
@@ -39,5 +43,12 @@ return [
         'delete' => 'Löschen',
         'move_up' => 'Nach oben verschieben',
         'move_down' => 'Nach unten verschieben',
+    ],
+    'actions' => [
+        'clone_project' => 'Projekt klonen',
+    ],
+    'notifications' => [
+        'project_cloned_title' => 'Projekt geklont',
+        'project_cloned_body' => 'Das Projekt „:name“ wurde in deinen Bereich kopiert.',
     ],
 ];

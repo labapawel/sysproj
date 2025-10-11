@@ -29,6 +29,10 @@ return [
         'order' => 'Order',
         'user' => 'User',
         'add_user' => 'Add user',
+        'all_projects' => 'All projects',
+        'project_owner' => 'Project owner',
+        'stages' => 'Stages',
+        'copy_suffix' => 'Copy',
         'teacher_panel' => 'Teacher Panel',
         'my_projects' => 'My Projects',
         'manage_tasks' => 'Manage tasks',
@@ -40,5 +44,12 @@ return [
         'delete' => 'Delete',
         'move_up' => 'Move up',
         'move_down' => 'Move down',
+    ],
+    'actions' => [
+        'clone_project' => 'Clone project',
+    ],
+    'notifications' => [
+        'project_cloned_title' => 'Project cloned',
+        'project_cloned_body' => 'The project ":name" has been cloned to your workspace.',
     ],
 ];

@@ -28,6 +28,10 @@ return [
         'order' => 'Kolejność',
         'user' => 'Użytkownik',
         'add_user' => 'Dodaj użytkownika',
+        'all_projects' => 'Wszystkie projekty',
+        'project_owner' => 'Opiekun projektu',
+        'stages' => 'Etapy',
+        'copy_suffix' => 'Kopia',
         'teacher_panel' => 'Panel nauczyciela',
         'my_projects' => 'Moje projekty',
         'manage_tasks' => 'Przejdź do etapu',
@@ -39,5 +43,12 @@ return [
         'delete' => 'Usuń',
         'move_up' => 'Przenieś wyżej',
         'move_down' => 'Przenieś niżej',
+    ],
+    'actions' => [
+        'clone_project' => 'Sklonuj projekt',
+    ],
+    'notifications' => [
+        'project_cloned_title' => 'Projekt sklonowany',
+        'project_cloned_body' => 'Projekt „:name” został sklonowany do Twojego panelu.',
     ],
 ];
