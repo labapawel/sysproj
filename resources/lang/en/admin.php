@@ -13,6 +13,7 @@ return [
         'group' => 'Group',
         'groups' => 'Groups',
         'group_members' => 'Group members',
+        'admin_panel' => 'Admin panel',
         'users' => 'Users',
         'roles' => [
             'user' => 'User',

@@ -12,6 +12,7 @@ return [
         'group' => 'Gruppe',
         'groups' => 'Gruppen',
         'group_members' => 'Gruppenmitglieder',
+        'admin_panel' => 'Adminbereich',
         'password_confirmation' => 'Passwortbestätigung',
         'users' => 'Benutzer',
         'roles' => [

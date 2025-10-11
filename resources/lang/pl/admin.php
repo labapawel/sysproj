@@ -14,6 +14,7 @@ return [
         'group' => 'Grupa',
         'groups' => 'Grupy',
         'group_members' => 'Członkowie grupy',
+        'admin_panel' => 'Panel administracyjny',
         'roles' => [
             'moderator' => 'Opiekun',
             'admin' => 'Admin',

@@ -44,6 +44,10 @@ class PanelPanelProvider extends PanelProvider
                 AccountWidget::class,
                 // FilamentInfoWidget::class,
             ])
+            ->navigationGroups([
+                __('admin.title.teacher_panel'),
+                __('admin.title.admin_panel'),
+            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

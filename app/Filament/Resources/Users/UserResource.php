@@ -23,7 +23,7 @@ class UserResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('admin.admin_settings');
+        return __('admin.title.admin_panel');
     }
 
     public static function getPluralModelLabel(): string
