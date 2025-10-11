@@ -9,6 +9,9 @@ return [
         'updated_at' => 'Aktualisiert am',
         'password' => 'Passwort',
         'projects' => 'Projekte',
+        'group' => 'Gruppe',
+        'groups' => 'Gruppen',
+        'group_members' => 'Gruppenmitglieder',
         'password_confirmation' => 'Passwortbestätigung',
         'users' => 'Benutzer',
         'roles' => [
@@ -23,6 +26,7 @@ return [
         'description' => 'Beschreibung',
         'order' => 'Reihenfolge',
         'user' => 'Benutzer',
+        'add_user' => 'Benutzer hinzufügen',
         'teacher_panel' => 'Lehrer Panel',
         'my_projects' => 'Meine Projekte',
         'manage_tasks' => 'Zum Abschnitt wechseln',

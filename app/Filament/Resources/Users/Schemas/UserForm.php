@@ -38,6 +38,13 @@ class UserForm
                         1 => __('admin.title.roles.moderator'),
                         2 => __('admin.title.roles.admin'),
                     ]),
+                Select::make('groups')
+                    ->label(__('admin.title.groups'))
+                    ->relationship('groups', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable()
+                    ->columnSpanFull(),
                 Checkbox::make('active')
                     ->label(__('admin.title.active')),
             ]);
