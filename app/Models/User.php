@@ -4,8 +4,10 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -40,6 +42,11 @@ class User extends Authenticatable
         return $this->hasMany(Project::class);
     }
 
+    public function groups(): BelongsToMany
+    {
+        return $this->belongsToMany(Group::class)->withTimestamps();
+    }
+
     public function isAdmin()
     {
         return ($this->attributes['role'] & 2) === 2;
@@ -51,16 +58,35 @@ class User extends Authenticatable
         return ($this->attributes['role'] & 1) === 1;
     }
 
-    public function setRoleAttribute($value)
+    public function getRoleAttribute($value): array
     {
-        if (is_array($value)) {
-            $value = array_sum($value);
+        $value = (int) ($value ?? 0);
+
+        $roles = [];
+        if (($value & 1) === 1) {
+            $roles[] = 1;
         }
-        $this->attributes['role'] = $value;
+
+        if (($value & 2) === 2) {
+            $roles[] = 2;
+        }
+
+        return $roles;
     }
 
-    public function getRoleAttribute($value)
+    public function setRoleAttribute($value): void
     {
+        if (is_array($value)) {
+            $value = array_sum(array_map('intval', $value));
+        }
+
+        $this->attributes['role'] = (int) $value;
+    }
+
+    public function getRoleLabelsAttribute(): array
+    {
+        $value = (int) ($this->attributes['role'] ?? 0);
+
         $roles = [];
         if (($value & 1) === 1) {
             $roles[] = __('admin.title.roles.moderator');
@@ -72,11 +98,17 @@ class User extends Authenticatable
         return $roles;
     }
 
-    public function setPasswordAttribute($value)
+    public function setPasswordAttribute($value): void
     {
-        if (bcrypt('') !== $value) {
-            $this->attributes['password'] = $value;
+        if ($value === null || $value === '') {
+            return;
         }
+
+        if (password_get_info($value)['algo'] === 0) {
+            $value = Hash::make($value);
+        }
+
+        $this->attributes['password'] = $value;
     }
 
     /**

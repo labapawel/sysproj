@@ -11,6 +11,10 @@ return [
         'password_confirmation' => 'Potwierdzenie hasła',
         'users' => 'Użytkownicy',
         'projects' => 'Projekty',
+        'group' => 'Grupa',
+        'groups' => 'Grupy',
+        'group_members' => 'Członkowie grupy',
+        'admin_panel' => 'Panel administracyjny',
         'roles' => [
             'moderator' => 'Opiekun',
             'admin' => 'Admin',
@@ -23,6 +27,7 @@ return [
         'description' => 'Opis',
         'order' => 'Kolejność',
         'user' => 'Użytkownik',
+        'add_user' => 'Dodaj użytkownika',
         'teacher_panel' => 'Panel nauczyciela',
         'my_projects' => 'Moje projekty',
         'manage_tasks' => 'Przejdź do etapu',

@@ -10,6 +10,10 @@ return [
         'password' => 'Password',
         'password_confirmation' => 'Password confirmation',
         'projects' => 'Projects',
+        'group' => 'Group',
+        'groups' => 'Groups',
+        'group_members' => 'Group members',
+        'admin_panel' => 'Admin panel',
         'users' => 'Users',
         'roles' => [
             'user' => 'User',
@@ -24,6 +28,7 @@ return [
         'description' => 'Description',
         'order' => 'Order',
         'user' => 'User',
+        'add_user' => 'Add user',
         'teacher_panel' => 'Teacher Panel',
         'my_projects' => 'My Projects',
         'manage_tasks' => 'Manage tasks',

@@ -1,38 +1,32 @@
 <?php
 
-namespace App\Filament\Resources\Users\Tables;
+namespace App\Filament\Resources\Groups\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Support\Arr;
 
-class UsersTable
+class GroupsTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('admin.title.name'))
                     ->searchable()
-                    ->label(__('admin.title.name')),
-                TextColumn::make('email')
-                    ->label(__('admin.title.email'))
-                    ->searchable(),
-
-                TextColumn::make('role_labels')
-                    ->badge()
-                    ->label(__('admin.title.role'))
-                    ->formatStateUsing(fn ($state) => collect(Arr::wrap($state))->filter()->implode(', '))
-                    ->placeholder('—'),
-                TextColumn::make('groups.name')
-                    ->label(__('admin.title.groups'))
+                    ->sortable(),
+                TextColumn::make('description')
+                    ->label(__('admin.title.description'))
+                    ->limit(60)
                     ->wrap()
-                    ->formatStateUsing(fn ($state) => collect(Arr::wrap($state))->filter()->implode(', '))
-                    ->placeholder('—'),
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('users_count')
+                    ->counts('users')
+                    ->label(__('admin.title.users'))
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->label(__('admin.title.created_at'))
@@ -43,10 +37,6 @@ class UsersTable
                     ->label(__('admin.title.updated_at'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                CheckboxColumn::make('active')
-                    ->label(__('admin.title.active'))
-                    ->sortable(),
-                // ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -58,6 +48,7 @@ class UsersTable
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('name');
     }
 }
