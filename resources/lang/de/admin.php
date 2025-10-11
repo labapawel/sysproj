@@ -16,6 +16,7 @@ return [
         'password_confirmation' => 'Passwortbestätigung',
         'users' => 'Benutzer',
         'roles' => [
+            'user' => 'Benutzer',
             'moderator' => 'Moderator',
             'admin' => 'Admin',
         ],

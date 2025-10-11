@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             AdminUser::class,
+            SampleDataSeeder::class,
         ]);
     }
 }

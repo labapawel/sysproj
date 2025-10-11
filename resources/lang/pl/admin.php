@@ -16,6 +16,7 @@ return [
         'group_members' => 'Członkowie grupy',
         'admin_panel' => 'Panel administracyjny',
         'roles' => [
+            'user' => 'Użytkownik',
             'moderator' => 'Opiekun',
             'admin' => 'Admin',
         ],
