@@ -23,9 +23,11 @@ class UsersTable
                     ->label(__('admin.title.email'))
                     ->searchable(),
 
-                TextColumn::make('role')
+                TextColumn::make('role_labels')
                     ->badge()
-                    ->label(__('admin.title.role')),
+                    ->label(__('admin.title.role'))
+                    ->formatStateUsing(fn ($state) => collect(Arr::wrap($state))->filter()->implode(', '))
+                    ->placeholder('—'),
                 TextColumn::make('groups.name')
                     ->label(__('admin.title.groups'))
                     ->wrap()

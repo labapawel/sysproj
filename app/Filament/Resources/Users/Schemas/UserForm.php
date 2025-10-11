@@ -24,7 +24,9 @@ class UserForm
                     ->required(),
                 TextInput::make('password')
                     ->password()
-                    ->label(__('admin.title.password')),
+                    ->label(__('admin.title.password'))
+                    ->dehydrated(fn ($state): bool => filled($state))
+                    ->same('password_confirmation'),
                 TextInput::make('password_confirmation')
                     ->password()
                     ->label(__('admin.title.password_confirmation'))
@@ -33,11 +35,13 @@ class UserForm
                 Select::make('role')
                     ->label(__('admin.title.role'))
                     ->multiple()
+                    ->default([])
                     ->columnSpanFull()
                     ->options([
                         1 => __('admin.title.roles.moderator'),
                         2 => __('admin.title.roles.admin'),
-                    ]),
+                    ])
+                    ->dehydrateStateUsing(fn (?array $state): array => array_map('intval', $state ?? [])),
                 Select::make('groups')
                     ->label(__('admin.title.groups'))
                     ->relationship('groups', 'name')
@@ -48,6 +52,5 @@ class UserForm
                 Checkbox::make('active')
                     ->label(__('admin.title.active')),
             ]);
-
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Groups\RelationManagers;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Filament\Actions\AttachAction;
 use Filament\Actions\DetachAction;
 use Filament\Actions\DetachBulkAction;
@@ -31,9 +32,11 @@ class UsersRelationManager extends RelationManager
                 TextColumn::make('email')
                     ->label(__('admin.title.email'))
                     ->searchable(),
-                TextColumn::make('role')
+                TextColumn::make('role_labels')
                     ->label(__('admin.title.role'))
-                    ->badge(),
+                    ->badge()
+                    ->formatStateUsing(fn ($state) => collect(Arr::wrap($state))->filter()->implode(', '))
+                    ->placeholder('—'),
                 TextColumn::make('pivot.created_at')
                     ->dateTime()
                     ->label(__('admin.title.created_at'))
