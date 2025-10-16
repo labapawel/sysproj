@@ -8,6 +8,7 @@ use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Arr;
 
 class ProjectsTable
 {
@@ -27,6 +28,11 @@ class ProjectsTable
                 TextColumn::make('leadTime')
                     ->label(__('admin.title.leadTime'))
                     ->searchable(),
+                TextColumn::make('groups.name')
+                    ->label(__('admin.title.groups'))
+                    ->wrap()
+                    ->formatStateUsing(fn ($state) => collect(Arr::wrap($state))->filter()->implode(', '))
+                    ->placeholder('—'),
                 IconColumn::make('active')
                     ->label(__('admin.title.active'))
                     ->boolean(),

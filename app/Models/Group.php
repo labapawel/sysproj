@@ -19,4 +19,9 @@ class Group extends Model
     {
         return $this->belongsToMany(User::class)->withTimestamps();
     }
+
+    public function projects(): BelongsToMany
+    {
+        return $this->belongsToMany(Project::class, 'projects_groups')->withTimestamps();
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Project extends Model
 {
@@ -17,5 +18,10 @@ class Project extends Model
     public function stages()
     {
         return $this->hasMany(Stage::class);
+    }
+
+    public function groups(): BelongsToMany
+    {
+        return $this->belongsToMany(Group::class, 'projects_groups')->withTimestamps();
     }
 }
