@@ -22,6 +22,6 @@ class Project extends Model
 
     public function groups(): BelongsToMany
     {
-        return $this->belongsToMany(Group::class, 'projects_groups')->withTimestamps();
+        return $this->belongsToMany(Group::class, 'projects_groups', 'project_id', 'group_id')->withTimestamps();
     }
 }

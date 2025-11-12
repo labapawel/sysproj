@@ -486,7 +486,7 @@
         .task-card[data-priority="low"] {
             border-left-color: #10b981;
         }
-
+/*
         .column[data-column="todo"] .column-header {
             border-left-color: #64748b;
         }
@@ -506,7 +506,7 @@
         .column[data-column="done"] .column-header {
             border-left-color: #10b981;
         }
-
+*/
         /* Responsive */
         @media (max-width: 768px) {
             .board {
@@ -600,11 +600,11 @@
         // Konfiguracja
         let scrumConfig = {
             columns: [
-                { id: "backlog", name: "Backlog", order: 4 },
-                { id: "todo", name: "Do zrobienia", order: 1 },
-                { id: "inprogress", name: "W trakcie", order: 2 },
-                { id: "testing", name: "Testowanie", order: 3 },
-                { id: "done", name: "Zakończone", order: 4 }
+                { id: "backlog", name: "Backlog", order: 4, color: "#9c122dff" },
+                { id: "todo", name: "Do zrobienia", order: 1 , color: "#64748b" },
+                { id: "inprogress", name: "W trakcie", order: 2, color: "#3b82f6" },
+                { id: "testing", name: "Testowanie", order: 3, color: "#f59e0b" },
+                { id: "done", name: "Zakończone", order: 4, color: "#10b981" }
             ],
             tasks: [
                 {
@@ -728,7 +728,7 @@
             const tasks = scrumConfig.tasks.filter(t => t.columnId === column.id);
 
             div.innerHTML = `
-                <div class="column-header">
+                <div class="column-header" style="border-left-color: ${column.color};">
                     <span class="column-title">${column.name}</span>
                     <span class="task-count">${tasks.length}</span>
                 </div>
