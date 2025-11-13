@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('workers', function (Blueprint $table) {
             $table->id();
-            // do oprawowania
+            $table->string('name');
+            $table->foreignId('project_id')->constrained()->onDelete('cascade');
+            $table->timestamp('starttime')->nullable();
+            $table->timestamp('endtime')->nullable();
+            $table->unsignedTinyInteger('progress')->default(0);
+            $table->enum('status', ['pending', 'in_progress', 'completed', 'paused'])->default('pending');
             $table->timestamps();
         });
     }
