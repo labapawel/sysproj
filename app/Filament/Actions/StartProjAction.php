@@ -18,7 +18,7 @@ class StartProjAction
             ->modalDescription('Czy na pewno chcesz wykonać tę akcję?')
             ->action(function (StudProj $record) {
                 // Twoja logika tutaj
-                $record->update(['status' => 'completed']);
+             //  $record->update(['status' => 'completed']);
 
                 // Możesz dodać powiadomienie
                 \Filament\Notifications\Notification::make()

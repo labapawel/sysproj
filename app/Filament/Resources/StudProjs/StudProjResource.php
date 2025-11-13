@@ -16,6 +16,11 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use App\Models\StudProj;
 
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\RepeatableEntry;
+
 
 class StudProjResource extends Resource
 {
@@ -42,7 +47,30 @@ class StudProjResource extends Resource
 
     public static function infolist(Schema $schema): Schema
     {
-        return StudProjInfolist::configure($schema);
+        return StudProjInfolist::configure($schema)
+        ->schema([
+                    TextEntry::make('name')
+                        ->label(__('student.table.name'))
+                         ->columnSpanFull()
+                         ->color('primary'),
+                    TextEntry::make('description')
+                        ->label(__('student.table.description')) ->color('gray'),
+                    // Relacja stages jako lista
+                    RepeatableEntry::make('stages')
+                                ->label(__('student.table.stages')) // lub 'Etapy'
+                                ->schema([
+                                    TextEntry::make('name')
+                                        ->columnSpanFull()
+                                        ->label(__('student.table.name')),
+                                    TextEntry::make('description')
+                                        ->columnSpanFull()
+                                        ->label(__('student.table.description'))
+                                        // ->color('gray'),
+                                ])
+                                // ->columns(2) // opcjonalnie: 2 kolumny dla name i description
+                                ->columnSpanFull()
+                                ->grid(2),
+                ]);
     }
 
     public static function table(Table $table): Table

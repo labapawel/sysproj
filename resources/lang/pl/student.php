@@ -2,6 +2,10 @@
 return [
     'table' => [
         'name' => 'Nazwa',
+        'description' => 'Opis',
+
+        'stages' => 'Etapy',
+
     ],
     'title'=>[
         'projects' => 'Projekty',

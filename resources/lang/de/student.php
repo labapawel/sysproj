@@ -2,6 +2,8 @@
 return [
     'table' => [
         'name' => 'Name',
+        'description' => 'Description',
+        'stages' => 'Stages',
     ],
     'title'=>[
         'projects' => 'Projects',
