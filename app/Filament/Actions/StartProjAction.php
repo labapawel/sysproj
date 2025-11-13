@@ -4,6 +4,7 @@ namespace App\Filament\Actions;
 
 use \Filament\Actions\Action;
 use App\Models\StudProj;
+use Filament\Forms\Components\TextInput;
 
 class StartProjAction
 {
@@ -16,13 +17,28 @@ class StartProjAction
             ->requiresConfirmation()
             ->modalHeading('Potwierdzenie')
             ->modalDescription('Czy na pewno chcesz wykonać tę akcję?')
-            ->action(function (StudProj $record) {
-                // Twoja logika tutaj
-             //  $record->update(['status' => 'completed']);
 
-                // Możesz dodać powiadomienie
+            // Dodanie formularza
+            ->form([
+                TextInput::make('new_name')
+                    ->label('Nowa nazwa')
+                    ->default(fn (StudProj $record) => $record->name)
+                    ->required()
+                    ->maxLength(255)
+                    ->placeholder('Wprowadź nową nazwę projektu'),
+            ])
+
+            ->action(function (StudProj $record, array $data) {
+                // Dostęp do wprowadzonej nazwy
+                $newName = $data['new_name'];
+
+                // Twoja logika
+            //    $record->update(['name' => $newName]);
+
+                // Powiadomienie
                 \Filament\Notifications\Notification::make()
                     ->title('Sukces!')
+                    ->body("Nazwa projektu została zmieniona na: {$newName}")
                     ->success()
                     ->send();
             });
