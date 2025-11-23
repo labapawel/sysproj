@@ -2,11 +2,14 @@
 
 namespace App\Filament\Resources\StudProjs\Tables;
 
+use App\Filament\Actions\StartProjAction;
+use App\Filament\Resources\UserProjs\UserprojResource;
+use App\Models\Userproj;
+use Filament\Actions\Action as FilamentAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use App\Filament\Actions\StartProjAction;
 use Filament\Tables\Table;
 
 class StudProjsTable
@@ -41,6 +44,37 @@ class StudProjsTable
             ->recordActions([
                 ViewAction::make(),
                 StartProjAction::make(),
+                FilamentAction::make('open_board')
+                    ->label(__('student.actions.open_board') ?? 'Otwórz tablicę')
+                    ->icon('heroicon-o-viewfinder-circle')
+                    ->color('primary')
+                    ->url(function ($record) {
+                        $userId = auth()->id();
+
+                        if (! $userId) {
+                            return null;
+                        }
+
+                        $enrollment = Userproj::query()
+                            ->where('user_id', $userId)
+                            ->where('project_id', $record->id)
+                            ->first();
+
+                        return $enrollment ? UserprojResource::getUrl('view', ['record' => $enrollment]) : null;
+                    })
+                    ->visible(function ($record) {
+                        $userId = auth()->id();
+
+                        if (! $userId) {
+                            return false;
+                        }
+
+                        return Userproj::query()
+                            ->where('user_id', $userId)
+                            ->where('project_id', $record->id)
+                            ->exists();
+                    })
+                    ->openUrlInNewTab(),
                 // EditAction::make(),
             ])
             ->toolbarActions([

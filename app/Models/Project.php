@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Project extends Model
 {
@@ -23,5 +24,17 @@ class Project extends Model
     public function groups(): BelongsToMany
     {
         return $this->belongsToMany(Group::class, 'projects_groups', 'project_id', 'group_id')->withTimestamps();
+    }
+
+    public function enrollments(): HasMany
+    {
+        return $this->hasMany(Userproj::class, 'project_id');
+    }
+
+    public function enrollmentForUser(int $userId): ?Userproj
+    {
+        return $this->enrollments()
+            ->where('user_id', $userId)
+            ->first();
     }
 }
