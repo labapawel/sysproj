@@ -1,7 +1,7 @@
 @php
     $boardDomId = 'student-board-' . $board['enrollment']['id'];
 @endphp
-<div id="{{ $boardDomId }}" class="student-board" data-student-board data-board="{!! json_encode($board) !!}">
+<div id="{{ $boardDomId }}" class="student-board" data-student-board data-board="{{ json_encode($board) }}">
     <style>
         .student-board {
             --sb-surface: #ffffff;
@@ -571,6 +571,11 @@
                     : ready();
 
                 function setupBoard(wrapper) {
+                    if (wrapper.dataset.studentBoardInitialized) {
+                        return;
+                    }
+                    wrapper.dataset.studentBoardInitialized = '1';
+
                     let state;
 
                     try {
@@ -746,9 +751,9 @@
                                 const priorityLabel = task.priority && task.priority !== 'normal' ? task.priority : '';
                                 const timeLabel = task.timeEstimate ? `${task.timeEstimate}h` : '';
                                 meta.innerHTML = `
-                                                            <span>${priorityLabel}</span>
-                                                            <span>${timeLabel}</span>
-                                                        `;
+                                                                    <span>${priorityLabel}</span>
+                                                                    <span>${timeLabel}</span>
+                                                                `;
 
                                 const actions = document.createElement('div');
                                 actions.className = 'student-board__task-actions';
