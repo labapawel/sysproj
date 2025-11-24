@@ -430,7 +430,17 @@
             line-height: 1.4;
         }
 
-        @media (max-width: 768px) {
+            .student-board__modal-select {
+                width: 100%;
+                border-radius: 0.5rem;
+                border: 1px solid var(--sb-border);
+                background: var(--sb-column-bg);
+                color: inherit;
+                padding: 0.4rem 0.6rem;
+                font-size: 0.95rem;
+            }
+
+            @media (max-width: 768px) {
             .student-board {
                 padding: 1.25rem;
             }
@@ -453,30 +463,6 @@
             <select id="{{ $boardDomId }}-stage" data-stage-select></select>
         </div>
     </div>
-
-    <div class="student-board__stats">
-        <article class="student-board__stat">
-            <p>{{ __('student.table.current_stage') ?? 'Aktualny etap' }}</p>
-            <strong data-summary-stage>–</strong>
-            <span data-summary-stage-status></span>
-        </article>
-        <article class="student-board__stat">
-            <p>{{ __('student.table.stage_progress') ?? 'Postęp etapu' }}</p>
-            <strong data-stage-progress>0%</strong>
-            <span data-stage-count>0 / 0</span>
-        </article>
-        <article class="student-board__stat">
-            <p>{{ __('student.table.progress') ?? 'Postęp projektu' }}</p>
-            @php
-                $enrollmentCache = $board['enrollment']['status_cache'] ?? [];
-            @endphp
-            <strong data-enrollment-progress>{{ $enrollmentCache['progress'] ?? 0 }}%</strong>
-            <span
-                data-enrollment-count>{{ ($enrollmentCache['stages_completed'] ?? 0) . ' / ' . ($enrollmentCache['stages_total'] ?? 0) }}</span>
-        </article>
-    </div>
-
-    <div class="student-board__pills" data-stage-pills></div>
 
     <div class="student-board__stage-card">
         <div class="student-board__stage-header">
@@ -527,7 +513,9 @@
                 </div>
                 <div>
                     <dt>{{ __('student.board.status') ?? 'Status' }}</dt>
-                    <dd data-modal-status></dd>
+                    <dd>
+                        <select data-modal-status-select class="student-board__modal-select"></select>
+                    </dd>
                 </div>
                 <div>
                     <dt>{{ __('student.board.description') ?? 'Opis' }}</dt>
@@ -592,7 +580,6 @@
                     const elements = {
                         board: wrapper,
                         stageSelect: wrapper.querySelector('[data-stage-select]'),
-                        pills: wrapper.querySelector('[data-stage-pills]'),
                         stageName: wrapper.querySelector('[data-stage-name]'),
                         stageStatus: wrapper.querySelector('[data-stage-status]'),
                         stageDescription: wrapper.querySelector('[data-stage-description]'),
@@ -600,17 +587,16 @@
                         stageProgressPrimary: wrapper.querySelector('[data-stage-progress]'),
                         stageProgressInline: wrapper.querySelector('[data-stage-progress-inline]'),
                         stageCount: wrapper.querySelector('[data-stage-count]'),
-                        summaryStage: wrapper.querySelector('[data-summary-stage]'),
-                        summaryStageStatus: wrapper.querySelector('[data-summary-stage-status]'),
-                        enrollmentProgress: wrapper.querySelector('[data-enrollment-progress]'),
-                        enrollmentCount: wrapper.querySelector('[data-enrollment-count]'),
                         columns: wrapper.querySelector('[data-board-columns]'),
                         emptyState: wrapper.querySelector('[data-board-empty]'),
                         message: wrapper.querySelector('[data-board-message]'),
                         modal: wrapper.querySelector('[data-task-modal]'),
                         modalTitle: wrapper.querySelector('[data-modal-title]'),
                         modalStage: wrapper.querySelector('[data-modal-stage]'),
-                        modalStatus: wrapper.querySelector('[data-modal-status]'),
+                        modalTitle: wrapper.querySelector('[data-modal-title]'),
+                        modalStage: wrapper.querySelector('[data-modal-stage]'),
+                        modalStatusSelect: wrapper.querySelector('[data-modal-status-select]'),
+                        modalDescription: wrapper.querySelector('[data-modal-description]'),
                         modalDescription: wrapper.querySelector('[data-modal-description]'),
                         modalCloseButtons: wrapper.querySelectorAll('[data-task-modal-close]'),
                     };
@@ -649,21 +635,6 @@
                                 elements.stageSelect.appendChild(option);
                             });
                         }
-
-                        if (elements.pills) {
-                            elements.pills.innerHTML = '';
-                            state.stages.forEach((stage) => {
-                                const pill = document.createElement('button');
-                                pill.type = 'button';
-                                pill.className = 'student-board__pill' + (stage.id === selectedStageId ? ' is-active' : '');
-                                pill.dataset.stageId = stage.id;
-                                pill.textContent = `${stage.order}. ${stage.name}`;
-                                if (!canEditStage(stage) && stage.status !== 'completed') {
-                                    pill.classList.add('is-locked');
-                                }
-                                elements.pills.appendChild(pill);
-                            });
-                        }
                     };
 
                     const canEditStage = (stage) => {
@@ -688,17 +659,17 @@
                             ? stage.description
                             : {!! json_encode(__('student.board.stage_description_empty') ?? 'Brak opisu tego etapu.') !!};
                         elements.stageStatus.textContent = stageStatusLabels[stage.status] || stage.status;
-                        elements.stageProgressPrimary.textContent = formatPercent(cache.progress ?? 0);
-                        elements.stageProgressInline.textContent = formatPercent(cache.progress ?? 0);
-                        elements.stageCount.textContent = `${cache.tasks_done ?? 0} / ${cache.tasks_total ?? stage.tasks.length}`;
-                        elements.summaryStage.textContent = stage.name;
-                        elements.summaryStageStatus.textContent = stageStatusLabels[stage.status] || stage.status;
+                        if (elements.stageProgressPrimary) {
+                            elements.stageProgressPrimary.textContent = formatPercent(cache.progress ?? 0);
+                        }
+                        if (elements.stageProgressInline) {
+                            elements.stageProgressInline.textContent = formatPercent(cache.progress ?? 0);
+                        }
+                        if (elements.stageCount) {
+                            elements.stageCount.textContent = `${cache.tasks_done ?? 0} / ${cache.tasks_total ?? stage.tasks.length}`;
+                        }
                         elements.stageLock.hidden = editable || stage.status === 'completed' || state.activeStageId === null;
                         elements.stageLock.textContent = {!! json_encode(__('student.board.locked') ?? 'Najpierw ukończ poprzedni etap.') !!};
-
-                        const enrollmentCache = state.enrollment.status_cache || {};
-                        elements.enrollmentProgress.textContent = formatPercent(enrollmentCache.progress ?? 0);
-                        elements.enrollmentCount.textContent = `${enrollmentCache.stages_completed ?? 0} / ${enrollmentCache.stages_total ?? 0}`;
                     };
 
                     const renderColumns = () => {
@@ -751,9 +722,9 @@
                                 const priorityLabel = task.priority && task.priority !== 'normal' ? task.priority : '';
                                 const timeLabel = task.timeEstimate ? `${task.timeEstimate}h` : '';
                                 meta.innerHTML = `
-                                                                    <span>${priorityLabel}</span>
-                                                                    <span>${timeLabel}</span>
-                                                                `;
+                                                                                    <span>${priorityLabel}</span>
+                                                                                    <span>${timeLabel}</span>
+                                                                                `;
 
                                 const actions = document.createElement('div');
                                 actions.className = 'student-board__task-actions';
@@ -997,7 +968,32 @@
                         const stage = getStageById(selectedStageId);
                         elements.modalTitle.textContent = task.title || 'Zadanie';
                         elements.modalStage.textContent = stage?.name ?? '';
-                        elements.modalStatus.textContent = columnLabels[task.status] || task.status;
+                        
+                        // Populate status select
+                        if (elements.modalStatusSelect) {
+                            elements.modalStatusSelect.innerHTML = '';
+                            state.columns.forEach(column => {
+                                const option = document.createElement('option');
+                                option.value = column.id;
+                                option.textContent = column.name || columnLabels[column.id] || column.id;
+                                option.selected = task.status === column.id;
+                                elements.modalStatusSelect.appendChild(option);
+                            });
+
+                            // Remove old listener if exists to avoid duplicates (simplified approach: clone node)
+                            const newSelect = elements.modalStatusSelect.cloneNode(true);
+                            elements.modalStatusSelect.parentNode.replaceChild(newSelect, elements.modalStatusSelect);
+                            elements.modalStatusSelect = newSelect;
+
+                            elements.modalStatusSelect.addEventListener('change', (e) => {
+                                const newStatus = e.target.value;
+                                updateTaskStatus(task.id, newStatus);
+                            });
+                            
+                            // Disable if stage is not editable
+                            elements.modalStatusSelect.disabled = !canEditStage(stage);
+                        }
+
                         elements.modalDescription.textContent = task.description?.trim()?.length
                             ? task.description
                             : {!! json_encode(__('student.board.description_empty') ?? 'Brak opisu zadania.') !!};
@@ -1011,6 +1007,18 @@
                         };
 
                         document.addEventListener('keydown', escHandler);
+                    };
+
+                    const updateTaskStatus = (taskId, newStatus) => {
+                        const stage = getStageById(selectedStageId);
+                        const task = stage.tasks.find(t => t.id === taskId);
+                        if (task && task.status !== newStatus) {
+                            task.status = newStatus;
+                            renderColumns(); // Re-render columns to move task
+                            updateStageCache(stage);
+                            renderStageCard();
+                            scheduleSync(stage.id);
+                        }
                     };
 
                     const closeModal = () => {
@@ -1037,13 +1045,6 @@
 
                     elements.stageSelect?.addEventListener('change', (event) => {
                         setSelectedStage(String(event.target.value));
-                    });
-
-                    elements.pills?.addEventListener('click', (event) => {
-                        const pill = event.target.closest('[data-stage-id]');
-                        if (pill) {
-                            setSelectedStage(String(pill.dataset.stageId));
-                        }
                     });
 
                     elements.columns?.addEventListener('click', (event) => {
