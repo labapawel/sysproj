@@ -10,6 +10,7 @@ use Filament\Actions\Contracts\HasActions;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -37,12 +38,12 @@ class StageTasksTable extends Component implements HasActions, HasForms, HasTabl
         $this->stage = Stage::with('project')->findOrFail($stageId);
 
         $user = Auth::user();
-        abort_if(! $user, 403);
+        abort_if(!$user, 403);
 
         $ownsProject = $user->id === $this->stage->project->user_id;
         $isAdmin = ((int) $user->getRawOriginal('role') & 2) === 2;
 
-        abort_if(! $ownsProject && ! $isAdmin, 403);
+        abort_if(!$ownsProject && !$isAdmin, 403);
 
         $this->mountInteractsWithTable();
         $this->cacheMountedActions($this->mountedActions);
@@ -98,7 +99,7 @@ class StageTasksTable extends Component implements HasActions, HasForms, HasTabl
                 ->mutateFormDataUsing(function (array $data): array {
                     $data['stage_id'] = $this->stage->id;
 
-                    if (! filled($data['order'] ?? null)) {
+                    if (!filled($data['order'] ?? null)) {
                         $maxOrder = Task::where('stage_id', $this->stage->id)->max('order');
                         $data['order'] = $maxOrder ? $maxOrder + 1 : 1;
                     }
@@ -130,9 +131,10 @@ class StageTasksTable extends Component implements HasActions, HasForms, HasTabl
                         $previousTask->save();
                     }
                 })
-                ->visible(fn (Task $record) => Task::where('stage_id', $record->stage_id)
-                    ->where('order', '<', $record->order)
-                    ->exists()
+                ->visible(
+                    fn(Task $record) => Task::where('stage_id', $record->stage_id)
+                        ->where('order', '<', $record->order)
+                        ->exists()
                 ),
             Action::make('move_down')
                 ->label('↓')
@@ -153,9 +155,10 @@ class StageTasksTable extends Component implements HasActions, HasForms, HasTabl
                         $nextTask->save();
                     }
                 })
-                ->visible(fn (Task $record) => Task::where('stage_id', $record->stage_id)
-                    ->where('order', '>', $record->order)
-                    ->exists()
+                ->visible(
+                    fn(Task $record) => Task::where('stage_id', $record->stage_id)
+                        ->where('order', '>', $record->order)
+                        ->exists()
                 ),
             EditAction::make()
                 ->label(__('admin.title.edit'))
@@ -172,9 +175,21 @@ class StageTasksTable extends Component implements HasActions, HasForms, HasTabl
                 ->label(__('admin.title.name'))
                 ->required()
                 ->maxLength(255),
-            Textarea::make('description')
+            MarkdownEditor::make('description')
                 ->label(__('admin.title.description'))
-                ->maxLength(65535),
+                ->toolbarButtons([
+                    'bold',
+                    'bulletList',
+                    'codeBlock',
+                    'heading',
+                    'italic',
+                    'link',
+                    'orderedList',
+                    'redo',
+                    'strike',
+                    'table',
+                    'undo',
+                ]),
             TextInput::make('duration')
                 ->label(__('admin.title.leadTime'))
                 ->numeric()

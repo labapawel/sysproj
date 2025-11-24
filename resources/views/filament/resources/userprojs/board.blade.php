@@ -457,6 +457,142 @@
                 box-shadow: 0 0 0 2px var(--sb-accent-muted);
             }
 
+            .student-board__modal-header-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .student-board__modal-header-row h4 {
+                margin: 0;
+                flex: 1;
+            }
+
+            .student-board__modal-header-row .student-board__modal-select {
+                min-width: 150px;
+                width: auto;
+            }
+
+            .student-board__modal-description {
+                line-height: 1.6;
+            }
+
+            .student-board__modal-description h1,
+            .student-board__modal-description h2,
+            .student-board__modal-description h3,
+            .student-board__modal-description h4,
+            .student-board__modal-description h5,
+            .student-board__modal-description h6 {
+                margin: 1.25em 0 0.5em;
+                font-weight: 600;
+                line-height: 1.3;
+            }
+
+            .student-board__modal-description h1:first-child,
+            .student-board__modal-description h2:first-child,
+            .student-board__modal-description h3:first-child,
+            .student-board__modal-description h4:first-child,
+            .student-board__modal-description h5:first-child,
+            .student-board__modal-description h6:first-child {
+                margin-top: 0;
+            }
+
+            .student-board__modal-description h1 { font-size: 1.75em; }
+            .student-board__modal-description h2 { font-size: 1.5em; }
+            .student-board__modal-description h3 { font-size: 1.25em; }
+            .student-board__modal-description h4 { font-size: 1.1em; }
+            .student-board__modal-description h5 { font-size: 1em; }
+            .student-board__modal-description h6 { font-size: 0.95em; }
+
+            .student-board__modal-description p {
+                margin: 0.75em 0;
+            }
+
+            .student-board__modal-description ul,
+            .student-board__modal-description ol {
+                margin: 0.75em 0;
+                padding-left: 2em;
+            }
+
+            .student-board__modal-description li {
+                margin: 0.25em 0;
+            }
+
+            .student-board__modal-description code {
+                background: var(--sb-column-bg);
+                border: 1px solid var(--sb-border);
+                border-radius: 0.25rem;
+                padding: 0.125rem 0.375rem;
+                font-family: 'Courier New', Courier, monospace;
+                font-size: 0.9em;
+            }
+
+            .student-board__modal-description pre {
+                background: var(--sb-column-bg);
+                border: 1px solid var(--sb-border);
+                border-radius: 0.5rem;
+                padding: 1rem;
+                overflow-x: auto;
+                margin: 1em 0;
+            }
+
+            .student-board__modal-description pre code {
+                background: none;
+                border: none;
+                padding: 0;
+            }
+
+            .student-board__modal-description blockquote {
+                border-left: 3px solid var(--sb-accent);
+                padding-left: 1rem;
+                margin: 1em 0;
+                color: var(--sb-text-muted);
+                font-style: italic;
+            }
+
+            .student-board__modal-description table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 1em 0;
+            }
+
+            .student-board__modal-description table th,
+            .student-board__modal-description table td {
+                border: 1px solid var(--sb-border);
+                padding: 0.5rem;
+                text-align: left;
+            }
+
+            .student-board__modal-description table th {
+                background: var(--sb-column-bg);
+                font-weight: 600;
+            }
+
+            .student-board__modal-description a {
+                color: var(--sb-accent);
+                text-decoration: none;
+            }
+
+            .student-board__modal-description a:hover {
+                text-decoration: underline;
+            }
+
+            .student-board__modal-description strong {
+                font-weight: 600;
+            }
+
+            .student-board__modal-description em {
+                font-style: italic;
+            }
+
+            .student-board__modal-description hr {
+                border: none;
+                border-top: 1px solid var(--sb-border);
+                margin: 1.5em 0;
+            }
+
             @media (max-width: 768px) {
             .student-board {
                 padding: 1.25rem;
@@ -464,6 +600,15 @@
 
             .student-board__columns {
                 grid-template-columns: 1fr;
+            }
+
+            .student-board__modal-header-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .student-board__modal-header-row .student-board__modal-select {
+                width: 100%;
             }
         }
     </style>
@@ -518,25 +663,22 @@
 
     <div class="student-board__modal" data-task-modal hidden>
         <div class="student-board__modal-panel">
-            <header>
-                <h4 data-modal-title></h4>
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 0.5rem;">
                 <button type="button" class="student-board__modal-close" data-task-modal-close
                     aria-label="{{ __('student.board.close') ?? 'Zamknij' }}">&times;</button>
-            </header>
+            </div>
+            <div class="student-board__modal-header-row">
+                <h4 data-modal-title></h4>
+                <select data-modal-status-select class="student-board__modal-select"></select>
+            </div>
             <dl class="student-board__modal-details">
                 <div>
                     <dt>{{ __('student.table.stage') ?? 'Etap' }}</dt>
                     <dd data-modal-stage></dd>
                 </div>
                 <div>
-                    <dt>{{ __('student.board.status') ?? 'Status' }}</dt>
-                    <dd>
-                        <select data-modal-status-select class="student-board__modal-select"></select>
-                    </dd>
-                </div>
-                <div>
                     <dt>{{ __('student.board.description') ?? 'Opis' }}</dt>
-                    <dd data-modal-description></dd>
+                    <dd data-modal-description class="student-board__modal-description"></dd>
                 </div>
             </dl>
         </div>
@@ -545,6 +687,8 @@
 
 @once
     @push('scripts')
+        <!-- Marked.js for markdown rendering -->
+        <script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js"></script>
         <script>
             (() => {
                 const stageStatusLabels = {
@@ -1011,9 +1155,17 @@
                             elements.modalStatusSelect.disabled = !canEditStage(stage);
                         }
 
-                        elements.modalDescription.textContent = task.description?.trim()?.length
+                        // Render markdown description
+                        const descriptionText = task.description?.trim()?.length
                             ? task.description
                             : {!! json_encode(__('student.board.description_empty') ?? 'Brak opisu zadania.') !!};
+                        
+                        // Use marked.js to render markdown if available
+                        if (typeof marked !== 'undefined' && task.description?.trim()?.length) {
+                            elements.modalDescription.innerHTML = marked.parse(descriptionText);
+                        } else {
+                            elements.modalDescription.textContent = descriptionText;
+                        }
                         elements.modal.hidden = false;
                         document.body.dataset.studentBoardModalOpen = '1';
 
