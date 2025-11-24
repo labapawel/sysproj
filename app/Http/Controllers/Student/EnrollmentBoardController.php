@@ -12,9 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class EnrollmentBoardController extends Controller
 {
-    public function __construct(private readonly EnrollmentBoardService $service)
-    {
-    }
+    public function __construct(private readonly EnrollmentBoardService $service) {}
 
     public function sync(Request $request, Userproj $enrollment, ProjStage $stage): JsonResponse
     {

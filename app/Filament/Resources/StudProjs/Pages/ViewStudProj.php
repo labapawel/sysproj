@@ -13,7 +13,6 @@ class ViewStudProj extends ViewRecord
 {
     protected static string $resource = StudProjResource::class;
 
-
     protected function getHeaderActions(): array
     {
         $enrollment = $this->getEnrollment();

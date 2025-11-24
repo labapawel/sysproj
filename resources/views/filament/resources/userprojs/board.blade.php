@@ -1,7 +1,7 @@
 @php
     $boardDomId = 'student-board-' . $board['enrollment']['id'];
 @endphp
-<div id="{{ $boardDomId }}" class="student-board" data-student-board data-board='@json($board)'>
+<div id="{{ $boardDomId }}" class="student-board" data-student-board data-board="{!! json_encode($board) !!}">
     <style>
         .student-board {
             --sb-surface: #ffffff;
@@ -445,7 +445,8 @@
         <div class="student-board__project">
             <p class="text-sm" style="margin:0;color:var(--sb-text-muted);">{{ __('student.title.student_panel') }}</p>
             <h2>{{ $board['enrollment']['project'] ?? 'Projekt' }}</h2>
-            <p>{{ __('student.title.copy_name') ?? 'Twoja kopia' }}: <strong>{{ $board['enrollment']['name'] }}</strong></p>
+            <p>{{ __('student.title.copy_name') ?? 'Twoja kopia' }}: <strong>{{ $board['enrollment']['name'] }}</strong>
+            </p>
         </div>
         <div class="student-board__selector">
             <label for="{{ $boardDomId }}-stage">{{ __('student.table.stage') ?? 'Etap' }}</label>
@@ -470,7 +471,8 @@
                 $enrollmentCache = $board['enrollment']['status_cache'] ?? [];
             @endphp
             <strong data-enrollment-progress>{{ $enrollmentCache['progress'] ?? 0 }}%</strong>
-            <span data-enrollment-count>{{ ($enrollmentCache['stages_completed'] ?? 0) . ' / ' . ($enrollmentCache['stages_total'] ?? 0) }}</span>
+            <span
+                data-enrollment-count>{{ ($enrollmentCache['stages_completed'] ?? 0) . ' / ' . ($enrollmentCache['stages_total'] ?? 0) }}</span>
         </article>
     </div>
 
@@ -479,23 +481,31 @@
     <div class="student-board__stage-card">
         <div class="student-board__stage-header">
             <div>
-                <p class="text-sm" style="margin:0;color:var(--sb-text-muted);">{{ __('student.table.stage') ?? 'Etap' }}</p>
+                <p class="text-sm" style="margin:0;color:var(--sb-text-muted);">
+                    {{ __('student.table.stage') ?? 'Etap' }}
+                </p>
                 <h3 data-stage-name>–</h3>
             </div>
             <div class="student-board__stage-meta">
                 <span class="status-pill" data-stage-status>–</span>
                 <div>
-                    <p style="margin:0;font-size:0.75rem;color:var(--sb-text-muted);">{{ __('student.table.stage_progress') ?? 'Postęp etapu' }}</p>
+                    <p style="margin:0;font-size:0.75rem;color:var(--sb-text-muted);">
+                        {{ __('student.table.stage_progress') ?? 'Postęp etapu' }}
+                    </p>
                     <strong style="font-size:1rem;" data-stage-progress-inline>0%</strong>
                 </div>
             </div>
         </div>
         <p class="student-board__stage-description" data-stage-description></p>
-        <p class="student-board__lock" data-stage-locked hidden>{{ __('student.board.locked') ?? 'Najpierw ukończ poprzedni etap.' }}</p>
+        <p class="student-board__lock" data-stage-locked hidden>
+            {{ __('student.board.locked') ?? 'Najpierw ukończ poprzedni etap.' }}
+        </p>
     </div>
 
     <div class="student-board__columns" data-board-columns></div>
-    <p class="student-board__empty" data-board-empty hidden>{{ __('student.board.no_tasks') ?? 'Brak zadań w tym projekcie.' }}</p>
+    <p class="student-board__empty" data-board-empty hidden>
+        {{ __('student.board.no_tasks') ?? 'Brak zadań w tym projekcie.' }}
+    </p>
 
     <div class="student-board__hint">
         {{ __('student.board.hint') ?? 'Przeciągaj zadania, aby aktualizować postęp i odblokowywać kolejne etapy.' }}
@@ -507,7 +517,8 @@
         <div class="student-board__modal-panel">
             <header>
                 <h4 data-modal-title></h4>
-                <button type="button" class="student-board__modal-close" data-task-modal-close aria-label="{{ __('student.board.close') ?? 'Zamknij' }}">&times;</button>
+                <button type="button" class="student-board__modal-close" data-task-modal-close
+                    aria-label="{{ __('student.board.close') ?? 'Zamknij' }}">&times;</button>
             </header>
             <dl class="student-board__modal-details">
                 <div>
@@ -532,21 +543,21 @@
         <script>
             (() => {
                 const stageStatusLabels = {
-                    pending: @json(__('student.board.status_pending') ?? 'Oczekuje'),
-                    in_progress: @json(__('student.board.status_in_progress') ?? 'W toku'),
-                    completed: @json(__('student.board.status_completed') ?? 'Zakończony'),
+                    pending: {!! json_encode(__('student.board.status_pending') ?? 'Oczekuje') !!},
+                    in_progress: {!! json_encode(__('student.board.status_in_progress') ?? 'W toku') !!},
+                    completed: {!! json_encode(__('student.board.status_completed') ?? 'Zakończony') !!},
                 };
 
                 const columnLabels = {
-                    todo: @json(__('student.board.todo') ?? 'Do zrobienia'),
-                    in_progress: @json(__('student.board.in_progress') ?? 'W toku'),
-                    done: @json(__('student.board.done') ?? 'Zakończone'),
+                    todo: {!! json_encode(__('student.board.todo') ?? 'Do zrobienia') !!},
+                    in_progress: {!! json_encode(__('student.board.in_progress') ?? 'W toku') !!},
+                    done: {!! json_encode(__('student.board.done') ?? 'Zakończone') !!},
                 };
 
                 const messages = {
-                    saved: @json(__('student.board.saved') ?? 'Zapisano postęp.'),
-                    completed: @json(__('student.board.completed') ?? 'Gratulacje! Ukończyłeś projekt.'),
-                    error: @json(__('student.board.error') ?? 'Nie udało się zapisać zmian. Spróbuj ponownie.'),
+                    saved: {!! json_encode(__('student.board.saved') ?? 'Zapisano postęp.') !!},
+                    completed: {!! json_encode(__('student.board.completed') ?? 'Gratulacje! Ukończyłeś projekt.') !!},
+                    error: {!! json_encode(__('student.board.error') ?? 'Nie udało się zapisać zmian. Spróbuj ponownie.') !!},
                 };
 
                 const formatPercent = (value) => `${Math.max(0, Math.min(100, Math.round(value ?? 0)))}%`;
@@ -670,7 +681,7 @@
                         elements.stageName.textContent = stage.name;
                         elements.stageDescription.textContent = stage.description?.trim()?.length
                             ? stage.description
-                            : @json(__('student.board.stage_description_empty') ?? 'Brak opisu tego etapu.');
+                            : {!! json_encode(__('student.board.stage_description_empty') ?? 'Brak opisu tego etapu.') !!};
                         elements.stageStatus.textContent = stageStatusLabels[stage.status] || stage.status;
                         elements.stageProgressPrimary.textContent = formatPercent(cache.progress ?? 0);
                         elements.stageProgressInline.textContent = formatPercent(cache.progress ?? 0);
@@ -678,7 +689,7 @@
                         elements.summaryStage.textContent = stage.name;
                         elements.summaryStageStatus.textContent = stageStatusLabels[stage.status] || stage.status;
                         elements.stageLock.hidden = editable || stage.status === 'completed' || state.activeStageId === null;
-                        elements.stageLock.textContent = @json(__('student.board.locked') ?? 'Najpierw ukończ poprzedni etap.');
+                        elements.stageLock.textContent = {!! json_encode(__('student.board.locked') ?? 'Najpierw ukończ poprzedni etap.') !!};
 
                         const enrollmentCache = state.enrollment.status_cache || {};
                         elements.enrollmentProgress.textContent = formatPercent(enrollmentCache.progress ?? 0);
@@ -735,9 +746,9 @@
                                 const priorityLabel = task.priority && task.priority !== 'normal' ? task.priority : '';
                                 const timeLabel = task.timeEstimate ? `${task.timeEstimate}h` : '';
                                 meta.innerHTML = `
-                                    <span>${priorityLabel}</span>
-                                    <span>${timeLabel}</span>
-                                `;
+                                                            <span>${priorityLabel}</span>
+                                                            <span>${timeLabel}</span>
+                                                        `;
 
                                 const actions = document.createElement('div');
                                 actions.className = 'student-board__task-actions';
@@ -745,7 +756,7 @@
                                 button.type = 'button';
                                 button.className = 'student-board__task-button';
                                 button.dataset.taskDetails = task.id;
-                                button.textContent = @json(__('student.board.view_description') ?? 'Szczegóły');
+                                button.textContent = {!! json_encode(__('student.board.view_description') ?? 'Szczegóły') !!};
                                 actions.appendChild(button);
 
                                 taskEl.appendChild(titleEl);
@@ -887,7 +898,7 @@
                         }
 
                         isSyncing = true;
-                        setMessage('info', @json(__('student.board.saving') ?? 'Zapisywanie...'));
+                        setMessage('info', {!! json_encode(__('student.board.saving') ?? 'Zapisywanie...') !!});
 
                         try {
                             const response = await fetch(state.syncUrl.replace('__STAGE__', stage.id), {
@@ -984,7 +995,7 @@
                         elements.modalStatus.textContent = columnLabels[task.status] || task.status;
                         elements.modalDescription.textContent = task.description?.trim()?.length
                             ? task.description
-                            : @json(__('student.board.description_empty') ?? 'Brak opisu zadania.');
+                            : {!! json_encode(__('student.board.description_empty') ?? 'Brak opisu zadania.') !!};
                         elements.modal.hidden = false;
                         document.body.dataset.studentBoardModalOpen = '1';
 

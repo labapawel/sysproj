@@ -10,15 +10,15 @@ class ViewUserproj extends ViewRecord
 {
     protected static string $resource = UserprojResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [];
-    }
-
     public function mount(int|string $record): void
     {
         parent::mount($record);
 
         abort_if($this->record->user_id !== Auth::id(), 403);
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [];
     }
 }

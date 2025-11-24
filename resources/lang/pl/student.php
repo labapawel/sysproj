@@ -1,4 +1,5 @@
 <?php
+
 return [
     'table' => [
         'name' => 'Nazwa',
@@ -10,7 +11,7 @@ return [
         'progress' => 'Postęp projektu',
         'tasks' => 'Zadania',
     ],
-    'title'=>[
+    'title' => [
         'projects' => 'Projekty',
         'student_panel' => 'Panel studenta',
         'start_project' => 'Rozpocznij projekt',

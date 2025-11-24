@@ -19,4 +19,4 @@ Follow PSR-12 and Laravel defaults: 4-space indentation, StudlyCase PHP classes 
 ## Commit & Pull Request Guidelines
 History shows Conventional Commits (`feat: ...`, `fix: ...`), so stick with lowercase types and imperative subjects (`feat: add worker progress tracking`). Each PR should include a concise summary, linked issue or ticket, screenshots/screencasts for UI changes (desktop + mobile for Filament when applicable), and a testing checklist referencing the commands above. Call out breaking migrations or queue changes in bold in the PR body, and document rollback steps whenever schema changes or seeds might affect reviewers.
 
-last use curr section  codex resume 019aaa6e-59dc-72b2-8d19-8202c0a05e6f
+last use curr section  

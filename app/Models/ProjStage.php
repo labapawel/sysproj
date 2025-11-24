@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProjStage extends Model
 {
-    protected $table = 'proj_stages';
-
     public const STATUS_PENDING = 'pending';
     public const STATUS_IN_PROGRESS = 'in_progress';
     public const STATUS_COMPLETED = 'completed';
+
+    protected $table = 'proj_stages';
 
     protected $fillable = [
         'name',

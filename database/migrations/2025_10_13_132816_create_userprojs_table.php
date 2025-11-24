@@ -6,19 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('userprojs', function (Blueprint $table) {
-             $table->id();
+            $table->id();
             $table->string('name');
             $table->text('description')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->boolean('active')->default(true);
-            $table->integer("status")->default(0); // 0 - new, 1 - in progress, 2 - completed, 3 - cancelled
+            $table->integer('status')->default(0); // 0 - new, 1 - in progress, 2 - completed, 3 - cancelled
 
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('project_id')->constrained()->onDelete('cascade');
@@ -26,9 +23,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('userurojs');
