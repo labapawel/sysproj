@@ -432,12 +432,29 @@
 
             .student-board__modal-select {
                 width: 100%;
-                border-radius: 0.5rem;
+                border-radius: 0.75rem;
                 border: 1px solid var(--sb-border);
-                background: var(--sb-column-bg);
+                background-color: var(--sb-column-bg);
                 color: inherit;
-                padding: 0.4rem 0.6rem;
+                padding: 0.6rem 2.5rem 0.6rem 1rem;
                 font-size: 0.95rem;
+                appearance: none;
+                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+                background-position: right 0.75rem center;
+                background-repeat: no-repeat;
+                background-size: 1.25em 1.25em;
+                transition: all 0.2s ease-in-out;
+                cursor: pointer;
+            }
+
+            .student-board__modal-select:hover {
+                border-color: var(--sb-accent);
+            }
+
+            .student-board__modal-select:focus {
+                outline: none;
+                border-color: var(--sb-accent);
+                box-shadow: 0 0 0 2px var(--sb-accent-muted);
             }
 
             @media (max-width: 768px) {
