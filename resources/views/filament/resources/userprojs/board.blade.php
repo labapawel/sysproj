@@ -968,7 +968,7 @@
                         const stage = getStageById(selectedStageId);
                         elements.modalTitle.textContent = task.title || 'Zadanie';
                         elements.modalStage.textContent = stage?.name ?? '';
-                        
+
                         // Populate status select
                         if (elements.modalStatusSelect) {
                             elements.modalStatusSelect.innerHTML = '';
@@ -989,7 +989,7 @@
                                 const newStatus = e.target.value;
                                 updateTaskStatus(task.id, newStatus);
                             });
-                            
+
                             // Disable if stage is not editable
                             elements.modalStatusSelect.disabled = !canEditStage(stage);
                         }

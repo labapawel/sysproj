@@ -35,7 +35,7 @@ class ProjectEnrollmentService
             $now = now();
 
             $stages = $project->stages()
-                ->with(['tasks' => fn($query) => $query->orderBy('order')])
+                ->with(['tasks' => fn ($query) => $query->orderBy('order')])
                 ->orderBy('order')
                 ->get();
 
@@ -95,7 +95,7 @@ class ProjectEnrollmentService
     {
         return $stage->tasks
             ->sortBy('order')
-            ->map(fn(Task $task) => [
+            ->map(fn (Task $task) => [
                 'id' => (string) Str::uuid(),
                 'blueprint_task_id' => $task->id,
                 'name' => $task->name,
